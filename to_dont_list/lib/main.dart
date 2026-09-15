@@ -1,89 +1,87 @@
 // Started with https://docs.flutter.dev/development/ui/widgets-intro
 import 'package:flutter/material.dart';
 import 'package:to_dont_list/objects/operations.dart';
-import 'package:to_dont_list/widgets/to_do_items.dart';
-import 'package:to_dont_list/widgets/to_do_dialog.dart';
+import 'package:to_dont_list/widgets/basic_buttons.dart';
 
-class ToDoList extends StatefulWidget {
-  const ToDoList({super.key});
+class CalculatorApp extends StatefulWidget {
+  const CalculatorApp({super.key});
 
   @override
-  State createState() => _ToDoListState();
+  State createState() => _CalculatorAppState();
 }
 
-class _ToDoListState extends State<ToDoList> {
-  final List<Item> items = [const Item(name: "add more todos")];
-  final _itemSet = <Item>{};
+class _CalculatorAppState extends State<CalculatorApp> {
+  final List<Item> items = [];
+  String displayText = "";
+  int firstNumber = 0;
+  String operation = "";
 
-  void _handleListChanged(Item item, bool completed) {
+  void _buttonPressed(String value) {
     setState(() {
+      if (value == '+' || value == '-') {
+        firstNumber = int.tryParse(displayText) ?? 0;
+        operation = value;
+        displayText = "";
+      } else if (value == '=') {
+        int secondNumber = int.tryParse(displayText) ?? 0;
+        int answer = 0;
+        if (operation == '+') {
+          answer = firstNumber + secondNumber;
+        } else if (operation == '-') {
+          answer = firstNumber - secondNumber;
+        }
+        displayText += answer.toString();
       // When a user changes what's in the list, you need
       // to change _itemSet inside a setState call to
       // trigger a rebuild.
       // The framework then calls build, below,
       // which updates the visual appearance of the app.
-
-      items.remove(item);
-      if (!completed) {
-        print("Completing");
-        _itemSet.add(item);
-        items.add(item);
-      } else {
-        print("Making Undone");
-        _itemSet.remove(item);
-        items.insert(0, item);
-      }
-    });
-  }
-
-  void _handleDeleteItem(Item item) {
-    setState(() {
-      print("Deleting item");
-      items.remove(item);
-    });
-  }
-
-  void _handleNewItem(String itemText, TextEditingController textController) {
-    setState(() {
-      print("Adding new item");
-      Item item = Item(name: itemText);
-      items.insert(0, item);
-      textController.clear();
+        items.insert(0,
+          Item(name: "$firstNumber $operation $secondNumber = $answer",),
+          );
+        } else {
+          displayText += value;
+        }
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: const Text('To Do List'),
-        ),
-        body: ListView(
-          padding: const EdgeInsets.symmetric(vertical: 8.0),
-          children: items.map((item) {
-            return ToDoListItem(
-              item: item,
-              completed: _itemSet.contains(item),
-              onListChanged: _handleListChanged,
-              onDeleteItem: _handleDeleteItem,
+    return Scaffold(appBar: AppBar(title: const Text("Basic Calculator"),
+    ),
+    body: Padding(padding: const EdgeInsets.all(12.0),
+    child: Column(children: [
+      TextField(readOnly: true, 
+      controller: TextEditingController(text: displayText),
+      decoration: const InputDecoration(
+        border: OutlineInputBorder(),
+      ),
+      ),
+      const SizedBox(height: 20.0),
+      CalculatorButtons(onButtonPressed: _buttonPressed,
+      ),
+      const SizedBox(height: 20.0),
+      const Text("Calculation History", style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold)),
+      Expanded(
+        child: ListView.builder(
+          itemCount: items.length,
+          itemBuilder: (context, index) {
+            return ListTile(
+              title: Text(items[index].name),
             );
-          }).toList(),
+          },
         ),
-        floatingActionButton: FloatingActionButton(
-            child: const Icon(Icons.add),
-            onPressed: () {
-              showDialog(
-                  context: context,
-                  builder: (_) {
-                    return ToDoDialog(onListAdded: _handleNewItem);
-                  });
-            }));
+      ),
+    ],
+    ),
+    ),
+    );
   }
 }
 
 void main() {
   runApp(const MaterialApp(
-    title: 'To Do List',
-    home: ToDoList(),
+    title: 'Calculator',
+    home: CalculatorApp(),
   ));
 }
