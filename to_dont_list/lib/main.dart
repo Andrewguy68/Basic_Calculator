@@ -7,7 +7,7 @@ class CalculatorApp extends StatefulWidget {
   const CalculatorApp({super.key});
 
   @override
-  State createState() => _CalculatorAppState();
+  State<CalculatorApp> createState() => _CalculatorAppState();
 }
 
 class _CalculatorAppState extends State<CalculatorApp> {
@@ -18,7 +18,11 @@ class _CalculatorAppState extends State<CalculatorApp> {
 
   void _buttonPressed(String value) {
     setState(() {
-      if (value == '+' || value == '-') {
+      if (value == 'C') {
+        displayText = "";
+        firstNumber = 0;
+        operation = "";
+      } else if (value == '+' || value == '-') {
         firstNumber = int.tryParse(displayText) ?? 0;
         operation = value;
         displayText = "";
@@ -30,7 +34,7 @@ class _CalculatorAppState extends State<CalculatorApp> {
         } else if (operation == '-') {
           answer = firstNumber - secondNumber;
         }
-        displayText += answer.toString();
+        displayText = answer.toString();
       // When a user changes what's in the list, you need
       // to change _itemSet inside a setState call to
       // trigger a rebuild.

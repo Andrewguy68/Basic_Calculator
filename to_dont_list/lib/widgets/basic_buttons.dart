@@ -30,9 +30,14 @@ class CalculatorButtons extends StatelessWidget {
                 buildButton('4'),
                 buildButton('5'),
                 buildButton('6'),
+                buildButton('7'),
+                buildButton('8'),
+                buildButton('9'),
+                buildButton('0'),
                 buildButton('+'),
                 buildButton('-'),
                 buildButton('='),
+                buildButton('C'),
             ],
         );
     }
