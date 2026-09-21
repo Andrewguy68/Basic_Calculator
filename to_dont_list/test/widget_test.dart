@@ -48,7 +48,8 @@ void main() {
     await tester.tap(find.text('='));
     await tester.pump();
 
-    expect(find.text('3'), findsOneWidget);
+    final textfield = tester.widget<TextField>(find.byType(TextField));
+    expect(textfield.controller?.text, equals('3'));
   });
 
   testWidgets('Subtraction Works', (tester) async {
@@ -66,7 +67,8 @@ void main() {
     await tester.tap(find.text('='));
     await tester.pump();
 
-    expect(find.text('1'), findsOneWidget);
+    final textfield = tester.widget<TextField>(find.byType(TextField));
+    expect(textfield.controller?.text, equals('1'));
   });
 
   testWidgets('History Works', (tester) async {
