@@ -30,6 +30,8 @@ class Operation {
         result += nextNumber;
       } else if (operation == '-') {
         result -= nextNumber;
+      } else if (operation == '=') {
+        break;
       }
     }
 

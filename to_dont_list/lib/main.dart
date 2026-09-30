@@ -34,12 +34,13 @@ class _CalculatorAppState extends State<CalculatorApp> {
       } else if (value == '=') {
         if (currentText.isNotEmpty) {
           operation.addNumber(int.tryParse(currentText) ?? 0);
+          operation.addOperation(value);
+          int answer = operation.calculate();
+          items.insert(0, Item(name: "$displayText = $answer"));
+          currentText += answer.toString();
+          displayText += "= $answer";
+          operation.clear();
         }
-        int answer = operation.calculate();
-        items.insert(0, Item(name: "$displayText = $answer"));
-        currentText += answer.toString();
-        displayText += answer.toString();
-        operation.clear();
     
       // When a user changes what's in the list, you need
       // to change _itemSet inside a setState call to
