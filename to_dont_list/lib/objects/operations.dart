@@ -22,7 +22,7 @@ class Operation {
 
     int result = numbers[0];
 
-    for (int i = 0; i < operations.length; i++) {
+    for (int i = 0; i < operations.length -1; i++) {
       String operation = operations[i];
       int nextNumber = numbers[i + 1];
 
@@ -30,8 +30,6 @@ class Operation {
         result += nextNumber;
       } else if (operation == '-') {
         result -= nextNumber;
-      } else if (operation == '=') {
-        break;
       }
     }
 

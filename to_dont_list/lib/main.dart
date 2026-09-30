@@ -41,7 +41,9 @@ class _CalculatorAppState extends State<CalculatorApp> {
           displayText += "= $answer";
           operation.clear();
         }
-    
+        displayText = "";
+        currentText = "";
+
       // When a user changes what's in the list, you need
       // to change _itemSet inside a setState call to
       // trigger a rebuild.
