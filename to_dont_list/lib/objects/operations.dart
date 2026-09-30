@@ -1,4 +1,8 @@
 // Data class to keep the operation name.
+class Item {
+  const Item({required this.name});
+  final String name;
+}
 
 class Operation {
   final List<int> numbers = [];

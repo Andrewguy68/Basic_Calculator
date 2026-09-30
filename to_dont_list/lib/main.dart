@@ -13,39 +13,43 @@ class CalculatorApp extends StatefulWidget {
 class _CalculatorAppState extends State<CalculatorApp> {
   final List<Item> items = [];
   String displayText = "";
-  int firstNumber = 0;
-  String operation = "";
+  String currentText = "";
+  final Operation operation = Operation();
 
   void _buttonPressed(String value) {
     setState(() {
       if (value == 'C') {
         displayText = "";
-        firstNumber = 0;
-        operation = "";
+        currentText = "";
+        operation.clear();
+
       } else if (value == '+' || value == '-') {
-        firstNumber = int.tryParse(displayText) ?? 0;
-        operation = value;
-        displayText = "";
-      } else if (value == '=') {
-        int secondNumber = int.tryParse(displayText) ?? 0;
-        int answer = 0;
-        if (operation == '+') {
-          answer = firstNumber + secondNumber;
-        } else if (operation == '-') {
-          answer = firstNumber - secondNumber;
+        if (currentText.isNotEmpty) {
+          operation.addNumber(int.tryParse(currentText) ?? 0);
+          operation.addOperation(value);
+          displayText += value;
+          currentText = "";
         }
-        displayText = answer.toString();
+
+      } else if (value == '=') {
+        if (currentText.isNotEmpty) {
+          operation.addNumber(int.tryParse(currentText) ?? 0);
+        }
+        int answer = operation.calculate();
+        items.insert(0, Item(name: "$displayText = $answer"));
+        currentText += answer.toString();
+        displayText += answer.toString();
+        operation.clear();
+    
       // When a user changes what's in the list, you need
       // to change _itemSet inside a setState call to
       // trigger a rebuild.
       // The framework then calls build, below,
       // which updates the visual appearance of the app.
-        items.insert(0,
-          Item(name: "$firstNumber $operation $secondNumber = $answer",),
-          );
-        } else {
-          displayText += value;
-        }
+      } else {
+        currentText += value;
+        displayText += value;
+      }
     });
   }
 
