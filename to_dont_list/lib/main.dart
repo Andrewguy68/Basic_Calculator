@@ -63,7 +63,9 @@ class _CalculatorAppState extends State<CalculatorApp> {
       appBar: AppBar(
         title: Text(
           'Basic Calculator!',
-          style: Theme.of(context).textTheme.headlineLarge,
+          style: Theme.of(context).textTheme.headlineLarge!.copyWith(
+            color: Theme.of(context).colorScheme.tertiary,
+          ),
         ),
         centerTitle: true,
     ),
@@ -88,7 +90,8 @@ class _CalculatorAppState extends State<CalculatorApp> {
             return ListTile(
               title: Text(
                 items[index].name,
-                style: Theme.of(context).textTheme.headlineSmall,
+                    style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                    color: Theme.of(context).colorScheme.secondary,),
               ),
             );
           },
@@ -109,6 +112,7 @@ void main() {
         seedColor: const Color.fromARGB(255, 39, 127, 228),
         primary: const Color.fromARGB(255, 15, 37, 126),
         secondary: const Color.fromARGB(235, 126, 34, 246),
+        tertiary: const Color.fromARGB(255, 131, 167, 252),
       ),
       useMaterial3: true,
       textTheme: TextTheme(

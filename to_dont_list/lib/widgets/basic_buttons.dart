@@ -13,7 +13,12 @@ class CalculatorButtons extends StatelessWidget {
             height: 60,
             child: ElevatedButton(
                 onPressed: () => onButtonPressed(buttonText),
-                child: Text(buttonText, style: Theme.of(context).textTheme.headlineMedium,),
+                child: Text(
+                    buttonText,
+                    style: Theme.of(context).textTheme.headlineMedium!.copyWith(
+                        color: Theme.of(context).colorScheme.primary,
+                    ),
+                ),
             ),
         );
     }
