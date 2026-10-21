@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:to_dont_list/objects/operations.dart';
 import 'package:to_dont_list/widgets/basic_buttons.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class CalculatorApp extends StatefulWidget {
   const CalculatorApp({super.key});
@@ -58,7 +59,13 @@ class _CalculatorAppState extends State<CalculatorApp> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: AppBar(title: const Text("Basic Calculator"),
+        return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          'Basic Calculator!',
+          style: Theme.of(context).textTheme.headlineLarge,
+        ),
+        centerTitle: true,
     ),
     body: Padding(padding: const EdgeInsets.all(12.0),
     child: Column(children: [
@@ -66,6 +73,7 @@ class _CalculatorAppState extends State<CalculatorApp> {
       controller: TextEditingController(text: displayText),
       decoration: const InputDecoration(
         border: OutlineInputBorder(),
+        
       ),
       ),
       const SizedBox(height: 20.0),
@@ -78,7 +86,10 @@ class _CalculatorAppState extends State<CalculatorApp> {
           itemCount: items.length,
           itemBuilder: (context, index) {
             return ListTile(
-              title: Text(items[index].name),
+              title: Text(
+                items[index].name,
+                style: Theme.of(context).textTheme.headlineSmall,
+              ),
             );
           },
         ),
@@ -91,8 +102,21 @@ class _CalculatorAppState extends State<CalculatorApp> {
 }
 
 void main() {
-  runApp(const MaterialApp(
+  runApp(MaterialApp(
     title: 'Calculator',
-    home: CalculatorApp(),
+    theme: ThemeData(
+      colorScheme: ColorScheme.fromSeed(
+        seedColor: const Color.fromARGB(255, 39, 127, 228),
+        primary: const Color.fromARGB(255, 15, 37, 126),
+        secondary: const Color.fromARGB(235, 126, 34, 246),
+      ),
+      useMaterial3: true,
+      textTheme: TextTheme(
+        headlineLarge: GoogleFonts.abel(fontSize: 30, fontWeight: FontWeight.bold,),
+        headlineMedium: GoogleFonts.aboreto(fontSize: 20, fontWeight: FontWeight.bold,),
+        headlineSmall: GoogleFonts.asap(fontSize: 10, fontWeight: FontWeight.bold,),
+      ),
+    ),
+    home: const CalculatorApp(),
   ));
 }
