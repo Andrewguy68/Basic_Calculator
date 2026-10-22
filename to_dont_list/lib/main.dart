@@ -116,9 +116,9 @@ void main() {
       ),
       useMaterial3: true,
       textTheme: TextTheme(
-        headlineLarge: GoogleFonts.abel(fontSize: 30, fontWeight: FontWeight.bold,),
-        headlineMedium: GoogleFonts.aboreto(fontSize: 20, fontWeight: FontWeight.bold,),
-        headlineSmall: GoogleFonts.asap(fontSize: 10, fontWeight: FontWeight.bold,),
+        headlineLarge: GoogleFonts.tektur(fontSize: 35, fontWeight: FontWeight.bold,),
+        headlineMedium: GoogleFonts.rubikSprayPaint(fontSize: 25, fontWeight: FontWeight.bold,),
+        headlineSmall: GoogleFonts.asap(fontSize: 15, fontWeight: FontWeight.bold,),
       ),
     ),
     home: const CalculatorApp(),
